@@ -1,0 +1,51 @@
+# Researcher overlay. scripts/install.py merges it into
+# ~/.hermes/profiles/researcher/config.yaml
+
+# No model block on purpose: the profile keeps the model it inherited when it
+# was created with `hermes profile create <name> --clone`. To give this agent
+# its own model, add:
+#   model:
+#     provider: <provider>
+#     default: <model id>
+
+# Left at the default on purpose: a specialist is a stateless worker and does
+# not need to share one conversation with everybody in the group.
+group_sessions_per_user: true
+
+telegram:
+  require_mention: true
+  exclusive_bot_mentions: true
+  mention_patterns: []
+  allow_bots: mentions
+  bots_require_mention: true
+
+gateway:
+  streaming:
+    enabled: false
+  bot_loop_guard:
+    enabled: true
+    max_events: 20
+    window_seconds: 300
+    cooldown_seconds: 600
+
+display:
+  tool_progress: "off"
+
+agent:
+  max_turns: 12
+  disabled_toolsets:             # keeps: web, skills, todo
+    - terminal
+    - file
+    - code_execution
+    - browser
+    - delegation
+    - cronjob
+    - messaging
+    - clarify
+    - memory
+    - image_gen
+    - tts
+
+memory:
+  memory_enabled: false          # every task starts clean
+  user_profile_enabled: false

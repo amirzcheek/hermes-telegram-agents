@@ -1,0 +1,14 @@
+{
+  "_comment": "Telegram @usernames of the four bots, WITHOUT the leading @. Not secret. Avoid underscores inside usernames: Markdown can break the mention.",
+  "COORDINATOR_BOT": "MdlCoordinatorBot",
+  "RESEARCHER_BOT": "MdlResearcherBot",
+  "CODER_BOT": "MdlCoderBot",
+  "STUDYBUDDY_BOT": "MdlStudyBuddyBot",
+  "TOPICS": {
+    "_comment": "Optional. Only for a group with Topics enabled: the thread id of each topic (last number in the topic's link). Leave null to skip. TEAM is the shared room where hand-offs happen.",
+    "TEAM": 2,
+    "RESEARCH": 3,
+    "CODE": 4,
+    "STUDY": 5
+  }
+}

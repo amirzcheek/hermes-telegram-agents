@@ -1,0 +1,55 @@
+# Coder overlay. scripts/install.py merges it into
+# ~/.hermes/profiles/coder/config.yaml
+
+# No model block on purpose: the profile keeps the model it inherited when it
+# was created with `hermes profile create <name> --clone`. To give this agent
+# its own model, add:
+#   model:
+#     provider: <provider>
+#     default: <model id>
+
+group_sessions_per_user: true
+
+telegram:
+  require_mention: true
+  exclusive_bot_mentions: true
+  mention_patterns: []
+  allow_bots: mentions
+  bots_require_mention: true
+
+gateway:
+  streaming:
+    enabled: false
+  bot_loop_guard:
+    enabled: true
+    max_events: 20
+    window_seconds: 300
+    cooldown_seconds: 600
+
+display:
+  tool_progress: "off"
+
+terminal:
+  backend: local
+  # cwd is filled in by scripts/install.py with an absolute path to a
+  # dedicated workspace folder. The local backend is NOT a sandbox: the agent
+  # runs commands as your user. Switch to backend: docker for real isolation.
+  cwd: "__CODER_WORKSPACE__"
+
+agent:
+  max_turns: 15
+  disabled_toolsets:             # keeps: terminal, file, skills, todo
+    - web
+    - browser
+    - code_execution
+    - delegation
+    - cronjob
+    - messaging
+    - clarify
+    - memory
+    - image_gen
+    - tts
+
+memory:
+  memory_enabled: false
+  user_profile_enabled: false

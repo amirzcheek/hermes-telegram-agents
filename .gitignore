@@ -1,0 +1,13 @@
+# Secrets never go into the repo
+.env
+*.env
+!.env.example
+auth.json
+*.bak
+# Hermes runtime state, in case a profile directory is copied here by mistake
+state.db*
+sessions/
+memories/
+logs/
+cron/
+__pycache__/

@@ -1,0 +1,53 @@
+# Coordinator overlay. scripts/install.py merges it into
+# ~/.hermes/profiles/coordinator/config.yaml
+
+# No model block on purpose: the profile keeps the model it inherited when it
+# was created with `hermes profile create <name> --clone`. To give this agent
+# its own model, add:
+#   model:
+#     provider: <provider>
+#     default: <model id>
+
+# One shared session for the whole group. The default (true) keys group sessions
+# by sender, so the human's request and each specialist's result would land in
+# three separate conversations and the coordinator could never combine them.
+group_sessions_per_user: false
+
+telegram:
+  require_mention: true          # ignore ordinary group chatter
+  exclusive_bot_mentions: true   # a message that names bot X is handled by X only
+  mention_patterns: []           # no wake words
+  allow_bots: mentions           # accept bot-written messages...
+  bots_require_mention: true     # ...only on an explicit @mention (a reply is not enough)
+
+gateway:
+  streaming:
+    enabled: false               # send one complete message; a half-streamed handoff must not wake a peer
+  bot_loop_guard:
+    enabled: true
+    max_events: 20               # bot messages per chat per window
+    window_seconds: 300
+    cooldown_seconds: 600
+
+display:
+  tool_progress: "off"           # quoted: bare off is a YAML boolean
+
+agent:
+  max_turns: 8                   # the coordinator only plans and writes
+  disabled_toolsets:             # no way to do the specialists' work itself
+    - web
+    - browser
+    - terminal
+    - file
+    - code_execution
+    - delegation                 # hand-offs go through Telegram, not internal subagents
+    - cronjob
+    - messaging
+    - clarify
+    - image_gen
+    - tts
+
+memory:
+  memory_enabled: true           # remembers stable user preferences (language, level)
+  user_profile_enabled: true
+  write_approval: false
